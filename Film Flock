@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Film Flock</title>
+</head>
+
+<body>
+    <p>Film Flock will be an application where users can rank their favorite movies via genra, the aplication will have
+        grade the movies based off how users as a whole rank them. Users will be able to post, comment on, and share
+        eachothers favorite lists, each user will have a "score" based on hours of movies watched
+    </p>
+</body>
