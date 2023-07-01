@@ -11,7 +11,7 @@ app.get("/movies", (req, res) => {
     { title: "The Shawshank Redemption", Genre: "Drama", rating: 8.2 },
     { title: "Pulp Fiction", Genre: "Action", rating: 8.7 },
     {
-      title: "Autsin Powers The Spy Who Shagged Me",
+      title: "Austin Powers: The Spy Who Shagged Me",
       Genre: "Comedy",
       rating: 7.2,
     },
@@ -27,6 +27,38 @@ app.get("/movies", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Welcome to Film Flock!");
+});
+
+app.get("/movies/:title", (req, res) => {
+  res.send("Return data about a single movie by title");
+});
+
+app.get("/genres/:name", (req, res) => {
+  res.send("Return data about a genre by name/title");
+});
+
+app.get("/directors/:name", (req, res) => {
+  res.send("Return data about a director by name");
+});
+
+app.post("/users/register", (req, res) => {
+  res.send("Allow new users to register");
+});
+
+app.patch("/users/:userId", (req, res) => {
+  res.send("Allow users to update their user info (username)");
+});
+
+app.post("/users/:userId/favorites", (req, res) => {
+  res.send("Allow users to add a movie to their favorites");
+});
+
+app.delete("/users/:userId/favorites", (req, res) => {
+  res.send("Allow users to remove a movie from their favorites");
+});
+
+app.delete("/users/:userId", (req, res) => {
+  res.send("Allow existing users to deregister");
 });
 
 app.use(express.static("public"));
