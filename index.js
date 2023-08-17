@@ -1,64 +1,109 @@
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+const Movies = Models.Movie;
+const Users = Models.User;
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const port = 5500;
 
+mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(morgan("combined"));
 
-app.get("/movies", (req, res) => {
-  const topMovies = [
-    { title: "The Godfather", Genre: "Drama", rating: 9.6 },
-    { title: "The Shawshank Redemption", Genre: "Drama", rating: 8.2 },
-    { title: "Pulp Fiction", Genre: "Action", rating: 8.7 },
+app.get("/movies", async (req, res) => {
+  await Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+app.post('/users', async (req, res) => {
+  await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>{res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
+
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+app.get('/users/:Username', async (req, res) => {
+  await Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+app.put('/users/:Username', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
-      title: "Austin Powers: The Spy Who Shagged Me",
-      Genre: "Comedy",
-      rating: 7.2,
-    },
-    { title: "Insidious", Genre: "Horror", rating: 7.1 },
-    { title: "Friday The 13th", Genre: "Horror", rating: 6.3 },
-    { title: "Spider-man (2002)", Genre: "Action", rating: 8.4 },
-    { title: "The Predator", Genre: "Action", rating: 6.5 },
-    { title: "The Dark Knight", Genre: "Action", rating: 9.3 },
-    { title: "Shrek", Genre: "Comedy", rating: 9.2 },
-  ];
-  res.json(topMovies);
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new: true }) 
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  })
+
 });
 
-app.get("/", (req, res) => {
-  res.send("Welcome to Film Flock!");
-});
-
-app.get("/movies/:title", (req, res) => {
-  res.send("Return data about a single movie by title");
-});
-
-app.get("/genres/:name", (req, res) => {
-  res.send("Return data about a genre by name/title");
-});
-
-app.get("/directors/:name", (req, res) => {
-  res.send("Return data about a director by name");
-});
-
-app.post("/users/register", (req, res) => {
-  res.send("Allow new users to register");
-});
-
-app.patch("/users/:userId", (req, res) => {
-  res.send("Allow users to update their user info (username)");
-});
-
-app.post("/users/:userId/favorites", (req, res) => {
-  res.send("Allow users to add a movie to their favorites");
-});
-
-app.delete("/users/:userId/favorites", (req, res) => {
-  res.send("Allow users to remove a movie from their favorites");
-});
-
-app.delete("/users/:userId", (req, res) => {
-  res.send("Allow existing users to deregister");
+app.delete('/users/:Username', async (req, res) => {
+  await Users.findOneAndRemove({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Username + ' was not found');
+      } else {
+        res.status(200).send(req.params.Username + ' was deleted.');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 app.use(express.static("public"));
