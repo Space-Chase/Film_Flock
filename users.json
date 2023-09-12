@@ -1,0 +1,8 @@
+{"_id":{"$oid":"64c97960039a36a8d7238600"},"username":"movie_enjoyer@movie.app","name":"Aron Ford","birthday":{"$date":"1993-10-03T04:00:00Z"},"favoriteMovies":["Lady bird","Resivior Dogs","Pulp Fiction"]}
+{"_id":{"$oid":"64c97960039a36a8d7238601"},"username":"mad_max43@movie.app","name":"Max Henry","birthday":{"$date":"1996-04-23T04:00:00Z"},"favoriteMovies":["Kill Bil","Dunkirk"]}
+{"_id":{"$oid":"64c97960039a36a8d7238602"},"username":"ammy_rosewater@movie.app","name":"Ammy Rosenberg","birthday":{"$date":"1999-05-16T04:00:00Z"},"favoriteMovies":["The Dark Knight","Little Woman"]}
+{"_id":{"$oid":"64c97960039a36a8d7238603"},"username":"aj_film@movie.app","name":"Alejandra Jones","birthday":{"$date":"1995-07-28T04:00:00Z"},"favoriteMovies":["Inception","Pulp Fiction"]}
+{"_id":{"$oid":"64d962cf5a7eb1f81c6cf887"},"Username":"testuser","Password":"testpassword","Email":"testuser@gmail.com","Birthday":{"$date":"1988-03-25T05:00:00Z"},"FavoriteMovies":[],"__v":0}
+{"_id":{"$oid":"64e52fe7875756d55b439669"},"Username":"Chase_paper","Password":"ChasePaper01","Email":"ChasePaper@gmail.com","Birthday":{"$date":"1998-05-29T04:00:00Z"},"FavoriteMovies":[],"__v":0}
+{"_id":{"$oid":"64ed0e4de8b398b8f0cbf651"},"Username":"testuser007","Password":"$2b$10$tLSFLymXGsRmUumtI6lpOOtt7amlSjWOVzB/v5HiOKxKvQQlgasbS","Email":"testuser007@gmail.com","Birthday":{"$date":"1997-05-29T04:00:00Z"},"FavoriteMovies":[],"__v":0}
+{"_id":{"$oid":"64ef7f66bc7d9b5b5d3924e6"},"Username":"testuser009","Password":"$2b$10$g3S99x.bd2.2XBR1FT4in.Sf2mQivOy4qX/icoKFw2Ycmv7kWgdpu","Email":"testuser009@gmail.com","Birthday":{"$date":"1999-07-05T04:00:00Z"},"FavoriteMovies":[],"__v":0}
