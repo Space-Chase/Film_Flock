@@ -29,7 +29,7 @@ let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
-mongoose.connect("mongodb://localhost:27017/MyFlixDB", {
+mongoose.connect("mongodb+srv://MyFlixDbAdmin:Higy6ninja@cluster0.dclgdwc.mongodb.net/MyFlixDB?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -51,7 +51,7 @@ app.get(
 );
 
 app.post(
-  "/users",
+  "/users",        
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
@@ -207,7 +207,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Internal Server Error");
 });
 
-const port = process.env.PORT || 5500;
+const port = process.env.PORT || 5501;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
