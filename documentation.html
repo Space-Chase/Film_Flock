@@ -12,34 +12,55 @@
         grade the movies based off how users as a whole rank them. Users will be able to post, comment on, and share
         eachothers favorite lists, each user will have a "score" based on hours of movies watched
     </p>
-
-    <h2>API Endpoints</h2>
-
-    <h3>GET /movies</h3>
-    <p>Retrieve a list of movies.</p>
-    
-    
-    
     <h3>POST /users</h3>
-    <p>Create a new user.</p>
+        
+        <h2>Endpoints</h2>
     
+        <div>
+            <h3>Get All Movies</h3>
+            <p>Endpoint: /movies </p>
+            <p>Description: Retrieve a list of all movies in the database.</p>
+            <p>Method: GET</p>
+            <p>Usage in Postman:
     
+                Request:
+                GET http://localhost:5500/movies
     
-    <h3>GET /users</h3>
-    <p>Retrieve a list of users.</p>
+                Response:
     
+                Body: [Array of Movie Objects]
+            </p>
+        </div>
+        <div>
+            <h3>Create a New User</h3>
+            <p>Endpoint: /users</p>
+            <p>Description: Create a new user with the provided username, password, email, and birthday.</p>
+            <p>Method: POST</p>
+            <p>Usage in Postman:
     
+                Request:
+                POST http://localhost:5500/users
+                Body:
+                {
+                "Username": "exampleUser",
+                "Password": "examplePassword",
+                "Email": "user@example.com",
+                "Birthday": "2000-01-01"
+                }
     
-    <h3>GET /users/:Username</h3>
-    <p>Retrieve a user by their username.</p>
-    
-    
-    
-    <h3>PUT /users/:Username</h3>
-    <p>Update a user's information.</p>
-    
-    
-    
-    <h3>DELETE /users/:Username</h3>
-    <p>Delete a user by their username.</p>
+                Response:
+                Status: 201 Created
+                Body:
+                {
+                "Username": "exampleUser",
+                "Email": "user@example.com",
+                "Birthday": "2000-01-01"
+                // Additional user details
+                }
+            </p>
+        </div>
+        <div>
+            
+        </div>
     </body>
+    
