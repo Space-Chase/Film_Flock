@@ -24,7 +24,7 @@ let Users = Models.User,
             return callback(null, false, {
               message: 'Incorrect username or password.',
             });
-          }
+          } console.log(user)
           if (!bcrypt.compareSync(password, user.Password)) {
             console.log('incorrect password');
             return callback(null, false, { message: 'Incorrect password.' });
