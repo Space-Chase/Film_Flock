@@ -61,7 +61,7 @@ app.post("/users/:userId/favorites", (req, res) => {
 app.post(
   "/users",        
   [
-    check("Username", "Username is required").isLength({ min: 5 }),
+    check("Username", "Username 5 characters minimum is required").isLength({ min: 5 }),
     check(
       "Username",
       "Username contains non alphanumeric characters - not allowed."
@@ -138,12 +138,13 @@ app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
