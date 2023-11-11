@@ -41,7 +41,7 @@ app.get(
   async (req, res) => {
     await Movies.find()
       .then((movies) => {
-        res.status(201).json(movies);
+        res.status(200).json(movies);
       })
       .catch((err) => {
         console.error(err);
@@ -57,7 +57,7 @@ app.get(
     const genre = req.params.genre;
 
     try {
-      const moviesByGenre = await Movies.find({ genre: genre });
+      const moviesByGenre = await Movies.find({ "details.genre": genre });
       res.status(200).json(moviesByGenre);
     } catch (err) {
       console.error(err);
