@@ -50,6 +50,39 @@ app.get(
   }
 );
 
+app.get(
+  "/movies/genre/:genre",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const genre = req.params.genre;
+
+    try {
+      const moviesByGenre = await Movies.find({ genre: genre });
+      res.status(200).json(moviesByGenre);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    }
+  }
+);
+
+app.get(
+  "/movies/director/:director",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const director = req.params.director;
+
+    try {
+      const moviesByDirector = await Movies.find({ director: director });
+      res.status(200).json(moviesByDirector);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    }
+  }
+);
+
+
 app.patch("/users/:userId", (req, res) => {
   res.send("Allow users to update their user info (username)");
 });
