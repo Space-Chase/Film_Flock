@@ -67,13 +67,13 @@ app.get(
 );
 
 app.get(
-  "/movies/director/:director",
+  "/movies/details/director/:director",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const director = req.params.director;
 
     try {
-      const moviesByDirector = await Movies.find({ director: director });
+      const moviesByDirector = await Movies.find({ "details.director": director });
       res.status(200).json(moviesByDirector);
     } catch (err) {
       console.error(err);
