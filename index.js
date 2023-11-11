@@ -51,7 +51,7 @@ app.get(
 );
 
 app.get(
-  "/movies/genre/:genre",
+  "/movies/details/genre/:genre",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const genre = req.params.genre;
