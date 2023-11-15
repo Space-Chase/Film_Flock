@@ -87,7 +87,7 @@ app.patch("/users/:userId", (req, res) => {
   res.send("Allow users to update their user info (username)");
 });
 
-app.post("/users/:userId/favorites/:movies",
+/*app.post("/users/:userId/favorites/:movies",
 passport.authenticate("jwt", { session: false }),
 async (req, res) => {
   await Users.findOne({ _id: req.params.userId })
@@ -104,7 +104,45 @@ async (req, res) => {
   
   res.send("Allow users to add a movie to their favorites");
   
-});
+});*/
+
+app.post(
+  "/users/:userId/favorites/:movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userId = req.params.userId;
+    const movieId = req.params.movies;
+
+    try {
+      // Check if the user exists
+      const user = await Users.findById(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // Check if the movie exists
+      const movie = await Movies.findById(movieId);
+      if (!movie) {
+        return res.status(404).send("Movie not found");
+      }
+
+      // Check if the movie is already in the user's favorites
+      if (user.Favorites.includes(movieId)) {
+        return res.status(400).send("Movie already in favorites");
+      }
+
+      // Add the movie to the user's favorites
+      user.Favorites.push(movieId);
+      await user.save();
+
+      res.status(201).json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    }
+  }
+);
+
 
 app.post(
   "/users",        
