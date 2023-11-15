@@ -87,8 +87,23 @@ app.patch("/users/:userId", (req, res) => {
   res.send("Allow users to update their user info (username)");
 });
 
-app.post("/users/:userId/favorites", (req, res) => {
+app.post("/users/:userId/favorites/:movies",
+passport.authenticate("jwt", { session: false }),
+async (req, res) => {
+  await Users.findOne({ _id: req.params.userId })
+  .then(async (user) => {
+    //Got user - move on to adding favorite movies
+    await Movies.findOne({ _id: req.params.movies })
+    .then((movie) => {
+  
+  
+  
+    })
+    })
+  
+  
   res.send("Allow users to add a movie to their favorites");
+  
 });
 
 app.post(
