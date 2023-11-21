@@ -87,39 +87,7 @@ app.patch("/users/:userId", (req, res) => {
   res.send("Allow users to update their user info (username)");
 });
 
-/*app.post("/users/:userId/favorites/:movies",
-passport.authenticate("jwt", { session: false }),
-async (req, res) => {
-  await Users.findOne({ _id: req.params.userId })
-  .then(async (user) => {
-    //Got user - move on to adding favorite movies
-    await Movies.findOne({ _id: req.params.movies })
-    .then((movie) => {
-  
-  
-  
-    })
-    })
-  
-  
-  res.send("Allow users to add a movie to their favorites");
-  
-});
 
-// Add a movie to a user's list of favorites
-app.post('/users/:Username/movies/:MovieID', async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-     $push: { FavoriteMovies: req.params.MovieID }
-   },
-   { new: true }) // This line makes sure that the updated document is returned
-  .then((updatedUser) => {
-    res.json(updatedUser);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send(‘Error: ’ + err);
-  });
-}); */
 
 app.post(
   "/users/:userId/favorites/:movies",
@@ -135,22 +103,103 @@ app.post(
         return res.status(404).send("User not found");
       }
 
+      // Check if the movie Id is valid
+      if (!mongoose.Types.ObjectId.isValid(movieId)){
+        return res.status (400).send("Invalid Movie Selection")
+      }
       // Check if the movie exists
       const movie = await Movies.findById(movieId);
       if (!movie) {
         return res.status(404).send("Movie not found");
       }
-
+      console.log(user)
       // Check if the movie is already in the user's favorites
-      if (user.Favorites.includes(movieId)) {
-        return res.status(400).send("Movie already in favorites");
+      if (user.FavoriteMovies && user.FavoriteMovies.includes(movieId)) {
+        return res.status(201).send("Movie already in favorites");
       }
 
       // Add the movie to the user's favorites
-      user.Favorites.push(movieId);
+      user.FavoriteMovies.push(movieId);
       await user.save();
 
       res.status(201).json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    }
+  }
+);
+
+/* app.delete(
+  "/users/:userId/favorites/:movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userId = req.params.userId;
+    const movieId = req.params.movies;
+
+    try {
+      // Check if the user exists
+      const user = await Users.findById(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // Check if the movie Id is valid
+      if (!mongoose.Types.ObjectId.isValid(movieId)){
+        return res.status (400).send("Invalid Movie Selection")
+      }
+      // Check if the movie exists
+      const movie = await Movies.findById(movieId);
+      if (!movie) {
+        return res.status(404).send("Movie not found");
+      }
+      console.log(user)
+      // Check if the movie is not in the user's favorites
+      if (user.FavoriteMovies && !user.FavoriteMovies.includes(movieId)) {
+        return res.status(201).send("Movie not in movie favorites");
+      }
+
+      // delete the movie to the user's favorites
+      user.FavoriteMovies.(movieId);
+      await user.save();
+
+      res.status(201).json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    }
+  }
+); */
+
+app.delete(
+  "/users/:userId/favorites/:movieId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userId = req.params.userId;
+    const movieId = req.params.movieId;
+
+    try {
+      // Check if the user exists
+      const user = await Users.findById(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // Check if the movie Id is valid
+      if (!mongoose.Types.ObjectId.isValid(movieId)) {
+        return res.status(400).send("Invalid Movie Selection");
+      }
+
+      // Check if the movie is not in the user's favorites
+      if (!user.FavoriteMovies || !user.FavoriteMovies.includes(movieId)) {
+        return res.status(404).send("Movie not in user favorites");
+      }
+
+      // Remove the movie from the user's favorites
+      user.FavoriteMovies.pull(movieId);
+      await user.save();
+
+      res.status(200).json(user);
     } catch (error) {
       console.error(error);
       res.status(500).send("Error: " + error);
