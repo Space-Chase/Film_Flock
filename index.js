@@ -29,7 +29,7 @@ let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
-mongoose.connect("mongodb+srv://MyFlixDbAdmin:Higy6ninja@cluster0.dclgdwc.mongodb.net/MyFlixDB?retryWrites=true&w=majority", {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -130,46 +130,6 @@ app.post(
   }
 );
 
-/* app.delete(
-  "/users/:userId/favorites/:movies",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const userId = req.params.userId;
-    const movieId = req.params.movies;
-
-    try {
-      // Check if the user exists
-      const user = await Users.findById(userId);
-      if (!user) {
-        return res.status(404).send("User not found");
-      }
-
-      // Check if the movie Id is valid
-      if (!mongoose.Types.ObjectId.isValid(movieId)){
-        return res.status (400).send("Invalid Movie Selection")
-      }
-      // Check if the movie exists
-      const movie = await Movies.findById(movieId);
-      if (!movie) {
-        return res.status(404).send("Movie not found");
-      }
-      console.log(user)
-      // Check if the movie is not in the user's favorites
-      if (user.FavoriteMovies && !user.FavoriteMovies.includes(movieId)) {
-        return res.status(201).send("Movie not in movie favorites");
-      }
-
-      // delete the movie to the user's favorites
-      user.FavoriteMovies.(movieId);
-      await user.save();
-
-      res.status(201).json(user);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    }
-  }
-); */
 
 app.delete(
   "/users/:userId/favorites/:movieId",
@@ -179,7 +139,6 @@ app.delete(
     const movieId = req.params.movieId;
 
     try {
-      // Check if the user exists
       const user = await Users.findById(userId);
       if (!user) {
         return res.status(404).send("User not found");

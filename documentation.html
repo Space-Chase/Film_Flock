@@ -1,60 +1,93 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Film Flock</title>
+    <meta charset="utf-8"/>
+    <title>Film Flock Movie API</title>
 </head>
 
 <body>
-    <h1>Film Flock API Documentation</h1>
+    <h1>Movie API Documentation (Film Flock)</h1>
 
-    <p>Film Flock will be an application where users can save their favorite movies via genra/director, users will be able to sort favorite movies after creating an account.
-    </p>
-        
-        <h2>Endpoints</h2>
-    
-        <div>
-            <h3>Get All Movies</h3>
-            <p>Endpoint: /movies </p>
-            <p>Description: Retrieve a list of all movies in the database.</p>
-            <p>Method: GET</p>
-            <p>Usage in Postman:
-    
-                Request:
-                GET http://localhost:5500/movies
-    
-                Response:
-    
-                Body: [Array of Movie Objects]
-            </p>
-        </div>
-        <div>
-            <h3>Create a New User</h3>
-            <p>Endpoint: /users</p>
-            <p>Description: Create a new user with the provided username, password, email, and birthday.</p>
-            <p>Method: POST</p>
-            <p>Usage in Postman:
-    
-                Request:
-                POST http://localhost:5500/users
-                Body:
-                {
-                "Username": "exampleUser",
-                "Password": "examplePassword",
-                "Email": "user@example.com",
-                "Birthday": "2000-01-01"
-                }
-    
-                Response:
-                Status: 201 Created
-                Body:
-                {
-                "Username": "exampleUser",
-                "Email": "user@example.com",
-                "Birthday": "2000-01-01"
-                // Additional user details
-                }
-            </p>
-        </div>
-    </body>
-    
+    <h2>Film Flock will be an application where users can save their favorite movies via genra/director, users will be
+        able to stock a list of their favorite movies after creating an account.
+    </h2>
+
+    <h2>Authentication note</h2>
+    <p>Authentication is required for certain endpoints. Use the provided token in the Authorization header, and place
+        user token in Bearer token section for authhencation purpouses.</p>
+
+    <h2>Endpoints</h2>
+
+    <h3>1. Get All Movies</h3>
+    <p>Retrieve a list of all movies.</p>
+    <code>GET https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies</code>
+
+    <h3>2. Get Movies by Genre</h3>
+    <p>Retrieve movies based on a specific genre.</p>
+    <code>GET https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies/details/genre/:genre</code>
+    <p>Replace <code>:genre</code> with the desired genre, ex., action, drama, comedy.</p>
+
+    <h3>3. Get Movies by Director</h3>
+    <p>Retrieve movies based on a specific director.</p>
+    <code>GET https://nameless-basin-66959-08ab77b73096.herokuapp.com/movies/details/director/:director</code>
+    <p>Replace <code>:director</code> with the name of the director.</p>
+
+    <h3>4. Update User Info</h3>
+    <p>Allow users to update their user information (username).</p>
+    <code>PATCH https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:userId</code>
+
+    <h3>5. Add Movie to Favorites</h3>
+    <p>Add a movie to a user's list of favorite movies.</p>
+    <code>POST https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:userId/favorites/:movieId</code>
+    <p>Replace <code>:userId</code> with the user's ID and <code>:movieId</code> with the movie's ID.</p>
+
+    <h3>6. Remove Movie from Favorites</h3>
+    <p>Remove a movie from a user's list of favorite movies.</p>
+    <code>DELETE https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:userId/favorites/:movieId</code>
+    <p>Replace <code>:userId</code> with the user's ID and <code>:movieId</code> with the movie's ID.</p>
+
+    <h3>7. Create User</h3>
+    <p>Create a new user account.</p>
+    <code>POST https://nameless-basin-66959-08ab77b73096.herokuapp.com/users</code>
+    <p>use body in json format to create a new user below is an exaple outline for creating users</p>
+    <p>Body:
+        {
+        "Username": "exampleUser",
+        "Password": "examplePassword",
+        "Email": "user@example.com",
+        "Birthday": "2000-01-01"
+        }</p>
+    <p>User name must be 5 or more characters</p>
+
+
+    <h3>8. Get All Users</h3>
+    <p>Retrieve a list of all users. Requires authentication, ALL usernames must be 5 chharacters or more.</p>
+    <code>GET https://nameless-basin-66959-08ab77b73096.herokuapp.com/users</code>
+
+    <h3>9. Get User by Username</h3>
+    <p>Retrieve user information based on the username. Requires authentication.</p>
+    <code>GET https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:Username</code>
+    <p>Replace <code>:Username</code> with the username.</p>
+
+    <h3>10. Update User Information</h3>
+    <p>Update user information based on the username. Requires authentication.</p>
+    <code>PUT https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:Username</code>
+    <p>Replace <code>:Username</code> with the username.</p>
+
+    <h3>11. Delete User</h3>
+    <p>Delete a user account based on the username. Requires authentication.</p>
+    <code>DELETE https://nameless-basin-66959-08ab77b73096.herokuapp.com/users/:Username</code>
+    <p>Replace <code>:Username</code> with the username.</p>
+
+    <h2>Notes</h2>
+    <ul>
+        <li>Ensure you include the required authentication token in the bearer token section on Postman 2 for secured
+            endpoints.</li>
+        <li>For endpoints requiring parameters, replace placeholders like <code>:userId</code> with accurate and real
+            values.</li>
+        <li>Errors and status codes will be returned in case of issues. Check the response body for details.</li>
+    </ul>
+</body>
+
+</html>
