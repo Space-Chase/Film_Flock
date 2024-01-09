@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
-let allowedOrigins = ["http://localhost:5501", "https://nameless-basin-66959-08ab77b73096.herokuapp.com"];
+let allowedOrigins = ["http://localhost:55179", "https://nameless-basin-66959-08ab77b73096.herokuapp.com"];
 const { check, validationResult } = require("express-validator");
 
 app.use(
