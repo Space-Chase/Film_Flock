@@ -170,7 +170,6 @@ app.delete(
 
 app.post(
   "/users",    
-  passport.authenticate("jwt", { session: false }),    
   [
     check("Username", "Username 5 characters minimum is required").isLength({ min: 5 }),
     check(
