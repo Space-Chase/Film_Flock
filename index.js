@@ -10,8 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
-let allowedOrigins = ["http://localhost:55179", "https://nameless-basin-66959-08ab77b73096.herokuapp.com","https://663aa7e5a8fc5178c7273e62--inspiring-daifuku-818a09.netlify.app/",
-"https://663aa7e5a8fc5178c7273e62--inspiring-daifuku-818a09.netlify.app"];
+let allowedOrigins = ["http://localhost:55179", "https://nameless-basin-66959-08ab77b73096.herokuapp.com","https://inspiring-daifuku-818a09.netlify.app/",
+"https://inspiring-daifuku-818a09.netlify.app"];
 const { check, validationResult } = require("express-validator");
 
 app.use(
